@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="">
+
+    <title>{{title_page}}</title>
+
+    {% load static %}
+
+    <link href="{% static 'googlefonts/roboto.css' %}" rel="stylesheet" />
+    <link href="{% static 'webfonts/css/materialdesignicons.min.css' %}" media="all" rel="stylesheet" type="text/css" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'assets/bootstrap-5.1.3/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <style>
+      footer, footer>.container {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+      }
+
+      .footer {
+        background-color: #212529;
+        width: 100%;
+        color: white;        
+      }
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      main > .container {
+        padding: 10px 15px 70px;
+      }
+
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="sticky-footer-navbar.css" rel="stylesheet">
+  </head>
+
+
+  <body class="d-flex flex-column h-100">
+
+    <header>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'index' %}">CONTRATS</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'list_client' %}">Clientes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contratos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Servicios</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Begin page content -->
+    <main class="flex-shrink-0 mt-5">
+      <div class="container pt-3">
+
+        {% if messages %}
+        <div class="content mb-0 pb-0">
+        <div class="row col-12 mb-0 pt-0">
+          {% for message in messages %}
+            {% if message.tags == "error" %}
+              <div class="alert alert-danger mt-2 alert-dismissible fade show" role="alert">
+              {% else %}
+              <div class="auto-close alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+            {% endif %}
+                {{ message }}
+    
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          {% endfor %}
+        </div>
+        </div>
+        {% endif %}
+
+        {% block content %}
+        <h1 class="mt-5">Sistema para la gestión de contratos y Control de la producción</h1>
+
+        <p class="lead">
+          En la mustra se implementa solo la gestión de los clientes y de los contratos 
+        </p>
+        <p>
+          No se le incorpora servicios a los contratos 
+        </p>
+
+      {% endblock %}  
+      </div>
+    </main>
+    
+    <footer class="bg-light">
+      <div class="footer w-100 p-2 m-0">
+        <span class="text-muted">Sistema em desarrollo</span>
+      </div>
+    </footer>
+
+    <script src="{% static 'assets/jquery-3.7/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'assets/bootstrap-5.1.3/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="{% static 'js/site.js' %}"></script>
+
+    {% block scripts %}
+
+    {% endblock %}
+
+    <script type="text/javascript">
+      // Ejemplo de JavaScript inicial para deshabilitar el envío de formularios si hay campos no válidos
+      (function () {
+          'use strict'
+
+          // Obtener todos los formularios a los que queremos aplicar estilos de validación de Bootstrap personalizados
+          var forms = document.querySelectorAll('.needs-validation')
+
+          // Bucle sobre ellos y evitar el envío
+          Array.prototype.slice.call(forms)
+              .forEach(function (form) {
+                  form.addEventListener('submit', function (event) {
+                      if (!form.checkValidity()) {
+                          event.preventDefault()
+                          event.stopPropagation()
+                      }
+
+                      form.classList.add('was-validated')
+                  }, false)
+              })
+      })()
+    </script>
+  </body>
+</html>

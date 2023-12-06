@@ -1,0 +1,232 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <div class="content">
+    <div class="row">
+      <div class="col-xl-8">
+        <div class="card card-default">
+          <div class="card-header card-header-border-bottom">
+            <h2>Cliente</h2>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+          {% if client.id %}
+            <form method="post" action="{% url 'update_client' client.id %}" enctype="multipart/form-data"
+            class="needs-validation" novalidate>
+          {% else %}
+            <form method="post" action="{% url 'create_client' %}" enctype="multipart/form-data"
+            class="needs-validation" novalidate>
+          {% endif %}
+
+            {% csrf_token %}
+
+              <div class="mb-3 row">
+                <label for="first_name" class="col-12 col-sm-3 col-md-2 col-form-label text-right">Tipo de Cliente</label>
+                <div class="col-sm-10 col-md-5">
+                  <select id="type" name="type" class="form-control form-select required" required>
+                    <option value="" {% if not form.type.value %}selected="selected"{% endif %}>Seleccione...</option>
+                    {% for key, value in type_clients.items %}
+                    <option value="{{key}}" {% if form.type.value == key %}selected="selected"{% endif %}>{{value}}</option>
+                    {% endfor %}
+                  </select>
+                  <div class="invalid-feedback">
+                    Por favor, seleccione el tipo de cliente
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="first_name" class="col-12 col-sm-3 col-md-2 col-form-label text-right">Entidad</label>
+                <div class="col-sm-10 col-md-6">
+                  <input type="text" class="form-control required" id="name" name="name"
+                  value={% if form.name.value %}"{{form.name.value}}"{% else %}""{% endif %}
+                  placeholder="Nombre de Empresa o Negocio" required />
+                </div>
+                <div class="invalid-feedback">
+                  Por favor, se necesita la entidad o nombre del negocio
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="address" class="col-12 col-sm-3 col-md-1 col-form-label text-right">Siglas</label>
+                <div class="col-sm-6 col-md-4">
+                  <input type="text" class="form-control required" id="acronym" name="acronym"
+                  value="{% if form.acronym.value %}{{form.acronym.value|striptags}}{% endif %}" placeholder="Siglas" required />
+                  <div class="invalid-feedback">
+                    Por favor, se require las siglas que identifican a la entidad
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="province" class="col-12 col-sm-4 col-md-2 col-form-label text-right">OSDE o Ministerio</label>
+                <div class="col-sm-10 col-md-6">
+                  <select id="ministry" name="ministry" class="form-control form-select required" required>
+                    <option value="" disabled>Seleccione...</option>
+                    {% for ministry in ministeries %}
+                    <option value="{{ministry.id}}" {% if form.ministry.value == ministry.id %}selected="selected"{% endif %}>{{ministry.name}}</option>
+                    {% endfor %}
+                  </select>
+                  <div class="invalid-feedback">
+                    Por favor, seleccione el Organo de Dirección Superior
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="province" class="col-12 col-sm-4 col-md-2 col-form-label text-right">Provincia</label>
+                <div class="col-sm-10 col-md-6">
+                  <select id="province" name="province" class="form-control form-select required" required>
+                    <option value="" disabled>Seleccione...</option>
+                    {% for province in provinces %}
+                    <option value="{{province.id}}" {% if form.province.value == province.id %}selected="selected"{% endif %}>{{province.name}}</option>
+                    {% endfor %}
+                  </select>
+                  <div class="invalid-feedback">
+                    Por favor, seleccione la provincia
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="municipality" class="col-12 col-sm-3 col-md-2 col-form-label text-right">Municipio</label>
+                <div class="col-sm-10 col-md-8">
+                  <div id="ajax-div-municipality" class="ajax-div">
+                    <select id="municipality" name="municipality" class="form-control form-select required" required>
+                      <option value="">Seleccione...</option>
+                      {% for municipality in municipalities %}
+                      <option value="{{municipality.id}}" {% if form.municipality.value == municipality.id %}selected="selected"{% endif %}>{{municipality.name}}</option>
+                      {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">
+                      Por favor, especifique el municipio
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="address" class="col-12 col-sm-3 col-md-2 col-form-label text-right">Dirección</label>
+                <div class="col-sm-10 col-md-8">
+                  <textarea nrows=4 class="form-control required" id="address" name="address"
+                  placeholder="Dirección" required>{% if form.address.value %}{{form.address.value|striptags}}{% endif %}</textarea>
+                  <div class="invalid-feedback">
+                    Por favor, se require la direccion
+                  </div>
+                </div>
+              </div>
+              
+              
+              <div class="mb-3 row">
+                <label for="description" class="col-12 col-sm-3 col-md-2 col-form-label text-right">Observaciones</label>
+                <div class="col-sm-10 col-md-8">
+                  <textarea nrows=4 class="form-control" id="description" name="description"
+                  placeholder="Descripción">{% if form.description.value %}{{form.description.value|striptags}}{% endif %}</textarea>
+                </div>
+              </div>
+
+
+              <fieldset class="p-3">
+                <legend class="w-auto">Representante</legend>
+                <div class="mb-3 row">
+                  <label for="first_name" class="col-12 col-sm-3 col-md-2 col-form-label text-right">Nombre</label>
+                  <div class="col-sm-10 col-md-8">
+                    <input type="text" class="form-control" id="first_name" name="first_name"
+                    value={% if form.first_name.value %}"{{form.first_name.value}}"{% else %}""{% endif %}
+                    placeholder="Nombre de la persona representante" required />
+                    <div class="invalid-feedback">
+                      Por favor, se necesita el nombre del representante
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3 row">
+                  <label for="last_name" class="col-12 col-sm-3 col-md-2 col-form-label text-right">Apellidos</label>
+                  <div class="col-sm-10 col-md-8">
+                    <input type="text" class="form-control required" id="last_name" name="last_name"
+                    value={% if form.last_name.value %}"{{form.last_name.value}}"{% else %}""{% endif %}
+                    placeholder="Apellidos de la persona representante" required />
+                    <div class="invalid-feedback">
+                      Por favor, se necesita los apellidos del representante
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3 row">
+                  <label for="no_dni" class="col-12 col-sm-4 col-md-2 col-form-label text-right">Cargo</label>
+                  <div class="col-sm-8 col-md-10">
+                    <input type="text" class="form-control" id="company_position" name="company_position" placeholder="Cargo"
+                    value={% if form.company_position.value %}"{{form.company_position.value}}"{% else %}""{% endif %} required />
+                    <div class="invalid-feedback">
+                      Por favor, especifique el cargo o posición de cliente
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+
+              <fieldset class="p-3">
+                <legend class="w-auto">Contacto</legend>
+                <div class="mb-3 row">
+                  <label for="email" class="col-12 col-sm-4 col-md-3 col-form-label text-right">Correo electrónico</label>
+                  <div class="col-sm-10 col-md-8">
+                    <input type="email" class="form-control required" id="email" name="email"
+                    value={% if form.email.value %}"{{form.email.value}}"{% else %}""{% endif %} placeholder="desarrollo@gmail.com" required />
+                    <div class="invalid-feedback">
+                      Por favor, se necesita el correo electrónico para el contacto
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3 row">
+                  <label for="telephone" class="col-12 col-sm-3 col-md-2 col-form-label text-right">Teléfono</label>
+                  <div class="col-sm-10 col-md-6">
+                    <input type="text" class="form-control required" id="telephone" name="telephone"
+                    value={% if form.telephone.value %}"{{form.telephone.value}}"{% else %}""{% endif %} placeholder="" required />
+                    <div class="invalid-feedback">
+                      Por favor, se necesita un número telefónico para el contacto
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+            <button type="submit" class="btn btn-primary mt-3 btn-pill">Aceptar</button>
+            <button type="button" class="btn btn-warning mt-3 btn-pill" onclick="self.location='{% url 'list_client' %}'">Cancelar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    var province
+    var municipality;
+
+    if(province == 'undefined')
+      province = "None"
+    if(municipality == 'undefined' || municipality == undefined)
+      municipality = "None"
+
+    $("#province").on('change', function() {
+      province = $(this).val();
+      data = {province:province, municipality:municipality}
+      var url = "{% url 'list_municipality_ajax' %}";
+      Fajax('ajax-div-municipality', url, data)
+    });
+
+    {% if client.id %}
+    data = {province:{{province_id}}, municipality:{{municipality_id}}}
+    url = "{% url 'list_municipality_ajax' %}";
+    Fajax('ajax-div-municipality', url, data)  
+    {% endif %}
+  });
+</script>
+
+
+{% endblock %}
