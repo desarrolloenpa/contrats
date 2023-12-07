@@ -22,9 +22,13 @@ class ClientForm(forms.ModelForm):
             "telephone",
             "description",
             "ministry",
+            "bank",
+            "bank_branch",
+            "account_usd",
+            "account_cup",
         ]
     
-
+    
 class ServiceForm(forms.ModelForm):
 
     class Meta:

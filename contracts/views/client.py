@@ -6,7 +6,7 @@ from settings.models.user import CustomUser
 from settings.models.local import Province, Municipality
 from settings.models.service import Ministry
 
-from contracts.base import TYPE_CLIENTS
+from contracts.base import TYPE_CLIENTS, BANKS
 from contracts.models import Client
 from contracts.forms import ClientForm
 
@@ -40,6 +40,7 @@ def create_client(request):
                         "municipalities": municipalities,
                         "ministeries": ministeries,
                         "type_clients": TYPE_CLIENTS,
+                        "banks": BANKS,
                     },
                 )
         else:
@@ -58,6 +59,7 @@ def create_client(request):
             "municipalities": municipalities,
             "ministeries": ministeries,
             "type_clients": TYPE_CLIENTS,
+            "banks": BANKS,
         },
     )
     
@@ -107,6 +109,7 @@ def edit_client(request, id):
             "municipalities": municipalities,
             "ministeries": ministeries,
             "type_clients": TYPE_CLIENTS,
+            "banks": BANKS,
             
             "province_id": client_dict["province_id"],
             "municipality_id": client_dict["municipality_id"],
@@ -144,6 +147,7 @@ def update_client(request, id):
                         "municipalities": municipalities,
                         "ministeries": ministeries,
                         "type_clients": TYPE_CLIENTS,
+                        "banks": BANKS,
                     },
                 )
         else:
@@ -160,6 +164,7 @@ def update_client(request, id):
             "municipalities": municipalities,
             "ministeries": ministeries,
             "type_clients": TYPE_CLIENTS,
+            "banks": BANKS,
         },
     )
     

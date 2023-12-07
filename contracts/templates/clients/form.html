@@ -117,7 +117,6 @@
                 </div>
               </div>
               
-              
               <div class="mb-3 row">
                 <label for="description" class="col-12 col-sm-3 col-md-2 col-form-label text-right">Observaciones</label>
                 <div class="col-sm-10 col-md-8">
@@ -167,7 +166,65 @@
 
 
               <fieldset class="p-3">
+                <legend class="w-auto">Datos Bancarios</legend>
+
+                <div class="mb-3 row">
+                  <div class="col">
+                    <label for="bank" class="col-12 col-sm-4 col-md-3 col-form-label text-right">Banco</label>
+                    <div class="col-sm-10 col-md-8">
+                      <select id="bank" name="bank" class="form-control form-select required" required>
+                        <option value="">Seleccione...</option>
+                        {% for key, bank in banks.items %}
+                        <option value="{{key}}" {% if form.bank.value == key %}selected="selected"{% endif %}>{{bank}}</option>
+                        {% endfor %}
+                      </select>
+                      <div class="invalid-feedback">
+                        Por favor, especifique el banco donde opera
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <label for="bank" class="col-12 col-sm-4 col-md-3 col-form-label text-right">Sucursal</label>
+                    <div class="col-sm-10 col-md-8">
+                      <input type="text" class="form-control required" id="bank_branch" name="bank_branch"
+                      value={% if form.bank_branch.value %}"{{form.bank_branch.value}}"{% else %}""{% endif %} required />
+                      <div class="invalid-feedback">
+                        Por favor, especifique la sucursal bancaria donde opera
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3 row">
+
+                  <div class="col">
+                    <label for="account" class="col-12 col-sm-4 col-md-3 col-form-label text-right">Cuenta CUP</label>
+                    <div class="col-sm-10 col-md-8">
+                      <input type="text" class="form-control required" id="account_cup" name="account_cup"
+                      value={% if form.account_cup.value %}"{{form.account_cup.value}}"{% else %}""{% endif %} required />
+                      <div class="invalid-feedback">
+                        Por favor, especifique el numero de la cuenta CUP
+                      </div>
+                    </div>                    
+                  </div>
+
+                  <div class="col">
+                    <label for="account" class="col-12 col-sm-4 col-md-3 col-form-label text-right">Cuenta USD</label>
+                    <div class="col-sm-10 col-md-8">
+                      <input type="text" class="form-control required" id="account_usd" name="account_usd"
+                      value={% if form.account_usd.value %}"{{form.account_usd.value}}"{% else %}""{% endif %} required />
+                      <div class="invalid-feedback">
+                        Por favor, especifique el numero de la cuenta USD
+                      </div>
+                    </div>                    
+                  </div>
+                </div>
+              </fieldset>  
+
+              <fieldset class="p-3">
                 <legend class="w-auto">Contacto</legend>
+
                 <div class="mb-3 row">
                   <label for="email" class="col-12 col-sm-4 col-md-3 col-form-label text-right">Correo electrónico</label>
                   <div class="col-sm-10 col-md-8">

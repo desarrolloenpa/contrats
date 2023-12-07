@@ -24,6 +24,11 @@ class Client(models.Model):
     email = models.EmailField(max_length=80, null=True, blank=False)
     telephone = models.CharField(max_length=80, null=True, blank=False)
     
+    bank = models.CharField(max_length=80, null=True, blank=False, help_text="Datos de Banco")
+    bank_branch = models.CharField(max_length=80, null=True, blank=False, help_text="Datos de Sucursal bancaria")
+    account_usd = models.CharField(max_length=20, null=True, blank=False, help_text="Cuenta USD")
+    account_cup = models.CharField(max_length=20, null=True, blank=False, help_text="Cuenta CUP")
+    
     description = models.TextField(null=True, blank=False)
     ministry = models.ForeignKey(Ministry, null=False, blank=False, on_delete=models.RESTRICT, 
                                  help_text="Organismo al que pertenece la empresa")

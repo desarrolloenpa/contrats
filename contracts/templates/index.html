@@ -44,10 +44,14 @@
         }
       }
 
-      main > .container {
+      main > .container, main > .container-fluid {
         padding: 10px 15px 70px;
       }
 
+      .container.w-100 {
+        width: 100%!important;
+        margin: -40px 0px;
+      }
     </style>
 
     <!-- Custom styles for this template -->
@@ -90,7 +94,7 @@
 
     <!-- Begin page content -->
     <main class="flex-shrink-0 mt-5">
-      <div class="container pt-3">
+      <div class="container-fluid pt-3">
 
         {% if messages %}
         <div class="content mb-0 pb-0">
@@ -111,22 +115,23 @@
         {% endif %}
 
         {% block content %}
-        <h1 class="mt-5">Sistema para la gestión de contratos y Control de la producción</h1>
+        <div class="container pt-3">
+          <h1 class="mt-5">Sistema para la <strong>Gestión de contratos</strong> y <strong>Control de la producción</strong></h1>
 
-        <p class="lead">
-          En la mustra se implementa solo la gestión de los clientes y de los contratos 
-        </p>
-        <p>
-          No se le incorpora servicios a los contratos 
-        </p>
-
+          <p class="lead">
+            En la mustra se implementa solo la Gestión de los clientes 
+          </p>
+          <p>
+            No se le desarrollan los Servicios ni los Contratos, pero quedan listos los modelos de base de dato y las vistas 
+          </p>          
+        </div>
       {% endblock %}  
       </div>
     </main>
     
     <footer class="bg-light">
       <div class="footer w-100 p-2 m-0">
-        <span class="text-muted">Sistema em desarrollo</span>
+        <h5 class="text-muted">Sistema en desarrollo - <strong>Nemexo S.R.L</strong></h5>
       </div>
     </footer>
 

@@ -13,3 +13,11 @@ TYPE_CLIENTS = {
     "EM"    : "Empresa Mixta",
 }
 
+
+BANKS= {
+    "BPA"    : "Banco Popular de Ahorro",
+    "BANDEC"   : "Banco de Credito y Comercio",
+    "BM"   : "Banco Metropolitano",
+    "BFI"   : "Banco Financiero Internacional",
+}
+
